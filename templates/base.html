@@ -1,0 +1,248 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Rainbow Cart</title>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-zoom/1.7.21/jquery.zoom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="{% static 'css/ionicons.min.css' %}" rel="stylesheet">
+
+
+    {% block head_js %}
+    {% endblock head_js %}
+</head>
+
+<body>
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h2 class="modal-title">Rainbow Cart</h2>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+         </div>
+    </div>
+    <nav style="color: white;background-color: black" class="navbar navbar-masthead navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">
+    <img src="{% static 'images/logo.png' %}" alt="logo" style="width:120px;">
+  </a>
+
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <form class="navbar-form" action="{% url 'search' %}" method="POST" > {% csrf_token %}
+                            <div class="input-group add-on">
+                                <input class="form-control" placeholder="Search" id="srch-term" type="text" name="q" height=20px>
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </li>
+                    <li><a href="{% url 'shop:product_list' %}"><i class="fa fa-home"></i>  Home</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'cart:favourite' %}"><i class="fa fa-bookmark" ></i>  Favourites</a></li>
+                        <li><a href="{% url 'upload' %}"><i class="fa fa-user" ></i>  Upload</a></li>
+                        <li><a href="{% url 'contact' %}"><i class="fa fa-user" ></i>  Contact Us</a></li>
+                        <li><a href="{% url 'accounts:logout' %}"><i class="fa fa-sign-out"></i> Log Out</a></li>
+                    {%  else %}
+                        <li><a href="{% url 'contact' %}"><i class="fa fa-phone"></i>  Contact Us</a></li>
+                        <li><a href="{% url 'accounts:register' %}"><i class="fa fa-user"></i> Register</a></li>
+                        <li><a href="{%  url 'account:login' %}"><i class="fa fa-sign-in"></i> Login</a></li>
+                    {% endif %}
+                    <li><a href="{%  url 'cart:home' %}"><i class="fa fa-shopping-cart"></i>
+                        {% if product_count > 0 %}
+                            <label class="badge badge-warning">{{ product_count }}</label>
+                        {% else %}
+                            <label class="badge badge-warning">0</label>
+                        {% endif %}
+                    </a>
+                    </li>
+
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <header>
+        <div class="jumbotron">
+
+        </div>
+    </header>
+    <div class="container">
+        {% block content %} {% endblock %}
+    </div>
+    <hr>
+    <footer style="background-color: rgba(12,12,11,0.89);" >
+
+
+      <div class="container footer-nav" >
+
+          <!--get socila with us-->
+          <div class="col-sm-12">
+              <div class="col-sm-4"></div>
+        <div class="col-sm-1 col-sm-12">
+            <div class="row align-center">
+                <h4 style="color: white"><b>Get social with us:</b></h4>
+                <br>
+                <br>
+                <br>
+
+            </div>
+        </div>
+        </div>
+
+<br>
+          <br>
+          <!--popular categories-->
+    <div class="col-md-12">
+        <div class="col-md-2 col-sm-12">
+            <div class="row">
+                <h4 style="color: white"><b>POPULAR CATEGORIES:</b></h4>
+            </div>
+        </div>
+        <div class="col-md-10 col-sm-12">
+            <div class="row">
+                <ul><!-- ngRepeat: cat in ::vm.footerData.pcategories -->
+                    <li ng-repeat="cat in ::vm.footerData.pcategories" class="ng-scope" style="display: inline-block">
+                        <a ng-href="/pc/foodgrains-oil-masala/edible-oils-ghee/sunflower-oils/?nc=bt" href="/pc/foodgrains-oil-masala/edible-oils-ghee/sunflower-oils/?nc=bt">
+                            <span style="color: white " ng-bind="::cat.name" class="ng-binding">Sunflower Oils</span>,
+                        </a>
+                    </li><!-- end ngRepeat: cat in ::vm.footerData.pcategories -->
+
+                    <li ng-repeat="cat in ::vm.footerData.pcategories" class="ng-scope" style="display: inline-block">
+                        <a ng-href="/pc/eggs-meat-fish/eggs/?nc=bt" href="/pc/eggs-meat-fish/eggs/?nc=bt">
+                            <span style="color: white " ng-bind="::cat.name" class="ng-binding">Eggs</span>,
+                        </a>
+                    </li><!-- end ngRepeat: cat in ::vm.footerData.pcategories -->
+                    </ul></div></div></div>
+
+
+          <!--popular brands-->
+          <div class="col-md-12">
+              <div class="col-md-2 col-sm-12">
+                  <div class="row">
+              <h4 style="color:white;"><b>POPULAR BRANDS:</b></h4>
+          </div>
+          </div>
+              <div class="col-md-10 col-sm-12">
+              <div class="row">
+    <ul>
+     <li style="display: inline-block">
+         <a ng-href="/pb/sunpure?nc=bt" href="/pb/sunpure?nc=bt">
+             <span style="color: white " ng-bind="::brand.brand.name" class="ng-binding">Sunpure </span>,
+         </a>
+     </li>
+     <li style="display: inline-block">
+         <a ng-href="/pb/bru?nc=bt" href="/pb/bru?nc=bt">
+             <span style="color: white " ng-bind="::brand.brand.name" class="ng-binding">Bru </span>,
+         </a>
+     </li>
+    <li style="display: inline-block">
+        <a ng-href="/pb/zespri?nc=bt" href="/pb/zespri?nc=bt">
+            <span style="color: white " ng-bind="::brand.brand.name" class="ng-binding">Patanjali</span>,
+        </a>
+    </li>
+        <li style="display: inline-block">
+        <a ng-href="/pb/zespri?nc=bt" href="/pb/zespri?nc=bt">
+            <span style="color: white " ng-bind="::brand.brand.name" class="ng-binding">Britannia</span>,
+        </a>
+    </li>
+        <li style="display: inline-block">
+        <a ng-href="/pb/zespri?nc=bt" href="/pb/zespri?nc=bt">
+            <span style="color: white " ng-bind="::brand.brand.name" class="ng-binding">Parle</span>,
+        </a>
+    </li>
+        <li style="display: inline-block">
+        <a ng-href="/pb/zespri?nc=bt" href="/pb/zespri?nc=bt">
+            <span style="color: white " ng-bind="::brand.brand.name" class="ng-binding">Cadbury</span>,
+        </a>
+    </li>
+        <li style="display: inline-block">
+        <a ng-href="/pb/zespri?nc=bt" href="/pb/zespri?nc=bt">
+            <span style="color: white " ng-bind="::brand.brand.name" class="ng-binding">Haldirams</span>,
+        </a>
+    </li>
+</ul>
+
+              </div>
+              </div>
+          </div>
+
+            <br>
+          <!--cities we serve-->
+          <div class="col-md-12">
+              <div class="col-md-2 col-sm-12">
+                  <div class="row">
+                      <h4 style="color:white;"><b>CITIES WE SERVE:</b></h4>
+                  </div></div><div class="col-md-10 col-sm-12">
+              <div class="row">
+                  <ul><!-- ngRepeat: (key, value) in ::vm.footerData.cities -->
+                  <li style="display: inline-block" ng-repeat="(key, value) in ::vm.footerData.cities" class="ng-scope">
+                      <span style="color: white" ng-bind="::value" class="ng-binding">Chandigarh </span>,
+                      &nbsp;</li>
+                       <li style="display: inline-block" ng-repeat="(key, value) in ::vm.footerData.cities" class="ng-scope">
+                      <span style="color: white" ng-bind="::value" class="ng-binding">Jalandhar </span>
+                      &nbsp;</li>
+                  </ul>
+      </div>
+      </div>
+      </div>
+
+
+
+
+          <!--payment options-->
+          <div class="col-md-12 hidden-sm hidden-xs payment-opt">
+              <div class="col-md-2 col-sm-12">
+                  <div class="row">
+                      <h4 style="color: white;"><b>PAYMENT OPTIONS:</b></h4>
+                  </div>
+              </div>
+              <div class="col-md-10">
+              <div class="row">
+                  <ul>
+                      <li>
+                      <span style="color: white;font-size: 10px; font-weight:bold; display: inline-flex;vertical-align: super; width: 50px">CASH ON DELIVERY</span>
+                    </li>
+                      <li>
+                      <span style="color: white;font-size: 10px; font-weight:bold; display: inline-flex;vertical-align: super; width: 50px">CREDIT/DEBIT CARD</span>
+                    </li>
+                      <li>
+                      <span style="color: white;font-size: 10px; font-weight:bold; display: inline-flex;vertical-align: super; width: 50px">NET BANKING/PAYTM</span>
+                    </li>
+                  </ul>
+              </div>
+              </div>
+          </div>
+      </div>
+    </footer>
+<br>
+
+</body>
+</html>

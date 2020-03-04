@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="container" align="center">
+    <h2><strong>Favourites </strong></h2>
+</div>
+
+    <div class="row row-flex">
+        {% for product in fav.products.all  %}
+
+            <div class="col-xs-10 col-xs-offset-1 col-sm-offset-0 col-sm-3 col-md-3 display panel panel-defualt ">
+
+                <div class="panel-body">
+                    <div class="product" align="center"><img  width="200" height="150"; src="{{ product.image1 }}"></div>
+                    <br>
+                    <h3 class="text-center"><b>{{ product.name }}</b></h3>
+                    <p class="product-description text-center">{{ product.description }}</p>
+                    <p class="text-center">Price = ₹ {{ product.price }}/-</p>
+
+
+
+                    <form class='form' method="post" action="{% url 'cart:fav_remove' %}">
+                        <input type="hidden" name="product_id" value ={{ product.id }}>
+                        {% csrf_token %}
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button  class="btn btn-danger" type="submit">Remove</button>
+
+                    </form>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

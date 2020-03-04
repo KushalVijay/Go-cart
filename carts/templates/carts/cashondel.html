@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content  %}
+    <h2 style="color: #1c7430;"><b>Your Order Has Been Placed Successfully</b></h2>
+<h5><b>Order ID: {{ order_id}}</b></h5>
+
+
+<h2>Order details:</h2>
+
+
+<table class="table table-borderless">
+
+  <tbody>
+    <tr>
+      <td>Name:</td>
+      <td>{{ user }}</td>
+    </tr>
+    <tr>
+      <td>Contact Number:</td>
+      <td>{{ contact }}</td>
+    </tr>
+
+    <tr>
+      <td>Shipping Address:</td>
+      <td>{{ address }}</td>
+    </tr>
+    <tr>
+      <td>Total Amount</td>
+      <td>{{ total }}</td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+
+{% endblock %}

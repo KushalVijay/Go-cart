@@ -1,0 +1,47 @@
+
+
+
+<script>
+function startTime() {
+  var today = new Date();
+  var h = today.getHours();
+  var m = today.getMinutes();
+  var s = today.getSeconds();
+  m = checkTime(m);
+  s = checkTime(s);
+
+
+  if( h>=0 && h<=6)
+    {
+        document.getElementById('txt').innerHTML =
+          "<b>Today</b>" +" , " +8 + ":" + 30 + "AM" +" to " + 12 + ":" + 30 + "PM" ;
+    }
+  else if(h>6 && h<=14)
+  {
+      document.getElementById('txt').innerHTML=
+          "<b>Today</b>" +" , " +4 + ":" + 30 + "PM" +" to " + 8 + ":" + 30 + "PM"  ;
+  }
+  else if(h>14 && h<=23)
+  {
+      document.getElementById('txt').innerHTML=
+          "<b>Tomorrow</b>" +" , " +8 + ":" + 30 + "AM" +" to " + 12 + ":" + 30 + "PM"  ;
+
+  }
+  var t = setTimeout(startTime, 500);
+}
+function checkTime(i) {
+  if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+  return i;
+}
+</script>
+
+
+<body onload="startTime()">
+
+<div id="txt"></div>
+
+</body>
+
+
+
+

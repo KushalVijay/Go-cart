@@ -1,0 +1,1 @@
+web: gunicorn Go_cart.wsgi

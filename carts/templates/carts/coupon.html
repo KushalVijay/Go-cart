@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <style>
+#rcorners1 {
+    border: 1px solid #062c33;
+  border-radius: 10px;
+    border-collapse: separate;
+    margin-right: 20px;
+    margin-bottom: 20px;
+  border-spacing: 15px 50px;
+    background: rgba(70,89,29,0.02);
+  padding: 20px;
+  width: 350px;
+  height: 150px;
+}
+    </style>
+
+
+
+<br><br>
+    <div class="container" align="center">
+    <h2><strong>Coupons</strong></h2>
+    </div>
+    <br><br>
+
+    <div class="container">
+  <div class="row">
+    {% for c in coupons %}
+      <div id="rcorners1" class="col-sm-4 ">
+      <h4 style="color: #0f6674" align="center"><strong>Coupon Code: {{ c.code }}</strong></h4>
+          <br>
+
+          <p>{{ c.description }}</p>
+    </div>
+{% endfor %}
+  </div>
+    </div>
+
+<form method="POST" action="{% url 'cart:Paytm' %}">{% csrf_token %}
+    <input type="hidden" name="order_id" value="{{order_id}}">
+    <input type="hidden" name="total" value="{{total}}">
+
+            <input  type="text"   name="code" placeholder="Type here" >
+            <button type="submit" name="submit" value="button4" class="btn btn-primary">Apply</button>
+            </form>
+
+
+{% endblock %}

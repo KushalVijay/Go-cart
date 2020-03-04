@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1> CART</h1>
+{% if length  %}
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Image</th>
+            <th></th>
+          <th>Product Price</th>
+
+        </tr>
+      </thead>
+      <tbody class="cart-body">
+      {% for item in cart_items %}
+        <tr class='cart-product'>
+          <th scope="row">{{ forloop.counter }}</th>
+            <td><a href="{{item.product.get_absolute_url }}"> <img height="130" width="130" src={{ item.product.image1 }}></a>
+            <br>
+                <h4>{{ item.product.name }} </h4>
+            </td>
+          <td>
+          <form class="form-inline" method="post" action="{% url 'cart:remove' %}">
+              <input type="hidden" name="item_id" value ={{ item.id }}>
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="exampleInputAmount" class="sr-only">New Qty</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">Qty</div>
+                            <input name="quantity" type="number" min="0" max="{{ item.product.stock }}" class="form-control" required>
+                            <div class="input-group-addon">{{ item.quantity }}</div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></button>
+          </form>
+          </td>
+          <td>{{ item.product.price }}</td>
+
+        </tr>
+      {% endfor %}
+        <tr>
+          <td  colspan="2" ></td>
+            <td></td>
+            <td><b>Subtotal</b> ₹ &nbsp; <span class='cart-subtotal'>{{ total }}</span></td>
+        </tr>
+      <tr>
+          <td colspan="2"></td>
+          <td></td>
+            <td><b>Total</b> ₹ &nbsp;<span class='cart-total'> {{ total }}</span></td>
+      </tr>
+      <tr>
+          <td colspan="2"></td>
+          <td><a href="{% url 'shop:product_list' %}">ADD MORE PRODUCTS</a></td>
+          <td><a class="btn btn-lg btn-success" href="{% url 'cart:checkout' %}">Checkout</a> </td>
+
+      </tr>
+      </tbody>
+    </table>
+
+
+
+
+{% else %}
+<p class="lead"> Cart is empty</p>
+    <h5><a href="{% url 'shop:product_list' %}">shop</a></h5>
+{% endif %}
+{% endblock %}

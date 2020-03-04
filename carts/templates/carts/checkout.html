@@ -1,0 +1,105 @@
+
+{% extends 'base.html' %}
+<style>
+   .pbox{
+       background-color: rgba(183,188,125,0.73);
+   }
+</style>
+
+
+{% block content %}
+<strong>Order Id : {{ order_id }} </strong>
+<h1>Finalize Checkout</h1>
+    <br>
+<div class="container">
+
+  <div class="row">
+    <div class="col-sm-2" style="background-color: rgba(188,176,188,0.73) ">
+
+      <h3 style="text-align: center"><b>Items:</b> </h3>
+        {% for item in cart_items %}
+        <ul>
+            <li>
+                <h5 >{{ item.product.name }}</h5>
+            </li>
+        </ul>
+
+        {%if not forloop.last %}
+        {% endif %}
+        {% endfor %}
+
+    </div>
+
+
+
+
+  <div class="col-sm-3">
+  </div>
+    <div class="col-sm-5">
+      <form class="form" method ="POST" action="{% url 'cart:Paytm' %}">{% csrf_token %}
+          <input type="hidden" name="order_id" value="{{order_id}}">
+
+          <input type="hidden" name="total" value="{{total}}">
+          <input type="hidden" name="newtotal" value="{{ newtotal}}">
+
+
+
+
+<!--          <input type="hidden" name="cart_id" value="{{object.id}}">-->
+          <table class="table table-striped">
+              <tbody>
+              <tr>
+                  <td>Shipping Address:</td>
+                  <td><input type="text" width="50px" height="50px" name="address" required></td>
+              </tr>
+              <tr>
+                  <td>Email:</td>
+                  <td><input type="email" name="email" required></td>
+              </tr>
+                <tr>
+                  <td>Contact Number:</td>
+                  <td><input minlength="10"  maxlength="10" type="tel" name="contact" required></td>
+              </tr>
+              <tr>
+                  <td>Cart Total:</td>
+                  <td>{{ total }}</td>
+              </tr>
+
+
+              <tr>
+                  <td>Shipping Total:</td>
+                  <td></td>
+              </tr>
+              <tr>
+                  <td>Order Total:</td>
+                  {% if newtotal %}
+                  <td>{{ newtotal }}</td>
+                  {% else %}
+                  <td>{{ total }}</td>
+                  {% endif %}
+              </tr>
+              </tbody>
+
+          </table>
+
+
+        <button type="submit" name="submit" value="button1">Pay Now</button>
+          <button type="submit" name="submit" value="button2">Cash On Deleivery</button>
+
+        </form>
+        <hr>
+    <form class="form" method ="POST" action="{% url 'cart:Paytm' %}">{% csrf_token %}
+          <input type="hidden" name="order_id" value="{{order_id}}">
+            <input type="hidden" name="total" value="{{total}}">
+        {% if flag %}
+          <button type="submit" name="submit" value="button3">Apply Coupon</button>
+        {% endif %}
+        </form>
+
+
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,90 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Faculty Home</title>
+    <link rel="stylesheet" href='{% static "css/bootstrap.min.css" %}'>
+    <script src='{% static "js/all.js"%}'></script>
+    <link rel="stylesheet" href= '{% static "css/FacultyHomePage.css" %}'>
+</head>
+<body>
+    <!--Start of Title section-->
+    <header>
+            <div id='header' class="container-fluid bg-primary">
+                <div class="row text-center text-white">
+                    <div class="col-sm-12 col-md-9 col-xs-9">
+                        <h2>Dr B R Ambedkar National Institute of Technology</h2>
+                        <h2> Jalandhar</h2>
+                    </div>
+                    <div class="col-sm-12 col-md-3 col-xs-3">
+                        <img src="{% static 'img/NITJ_Logo.jpg' %}">
+                    </div>
+                </div>
+            </div>
+        </header><br>
+        <!--End of title section-->
+        <nav>
+                <div class="row bg-primary">
+                    {% if user.is_authenticated %}
+                    <div class="col-2 text-center"><a href="" class="text-white">TIME TABLE</a></div>
+                    <div class="col-2 text-center"><a href="" class="text-white">SUBJECT PRIORITY</a></div>
+                    <div class="col-2 text-center"><a href="" class="text-white">GRIEVANCES</a></div>
+                    <div class="col-2 text-center"><a href="" class="text-white">SEND NOTES</a></div>
+                    <div class="col-2 text-center"><a href="" class="text-white">LEAVE</a></div>
+                    <div class="col-2 text-center" ><a href="{% url 'logout' %}" class="text-white">LOGOUT</a></div>
+                    {% else %}
+                    <div class="col-2 text-center"><a href="{% url 'login' %}" class="text-white">LOGIN</a></div>
+                    {% endif %}
+                </div>
+            </nav><br>
+            <section>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-9">
+                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repudiandae sint dolores voluptates.</p>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint nisi est autem alias voluptates natus provident eaque totam nihil tenetur, incidunt ex nemo veritatis sed?</p>
+                            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Deserunt iure officia velit corrupti deleniti cupiditate in nemo, nobis similique
+                             derit blanditiis rerum voluptatem a. Doloremque.</p>
+                        </div>
+                        <div class="col-3">
+                            <div class="conatainer bg-primary">
+                                    <h6 class="text-center">NEWS</h6>
+                                    <marquee behavior="" direction="">Lorem ipsum dolor sit amet,</marquee><br>
+                                    <marquee behavior="" direction="">Lorem ipsum dolor sit amet.
+                                    </marquee><br>
+                                    <marquee behavior="" direction="">Lorem ipsum dolor sit amet,</marquee><br>
+                                    <marquee behavior="" direction="">Lorem ipsum dolor sit amet.
+                                    </marquee><br>
+                                    <marquee behavior="" direction="">Lorem ipsum dolor sit amet,</marquee><br>
+                                    <marquee behavior="" direction="">Lorem ipsum dolor sit amet.
+                                    </marquee><br>
+                                    <marquee behavior="" direction="">Lorem ipsum dolor sit amet,</marquee><br>
+                                    <marquee behavior="" direction="">Lorem ipsum dolor sit amet.
+                                    </marquee><br>
+                                    <marquee behavior="" direction="">Lorem ipsum dolor sit amet,</marquee><br>
+                                    <marquee behavior="" direction="">Lorem ipsum dolor sit amet.
+                                    </marquee><br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section><br>
+            <footer>
+                    <div class="container-fluid bg-primary text-white">
+                        <div class="row">
+                            <div class="col-8 text-center">
+                                <p>ipsum dolor sit amet, consectetur adipisicing elit. Ipsum, minima.</p> 
+                            </div>
+                            <div class="col-4 text-center">
+                                    <a href="" class="text-white"><i class="fab fa-facebook-square fa-2x mx-3 my-2" width="10"></i></a>
+                                    <a href="" class="text-white"><i class="fab fa-twitter-square fa-2x mx-3 my-2"></i></a>
+                                    <a href="" class="text-white"><i class="fab fa-youtube-square  fa-2x mx-3 my-2"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+</body>
+</html>

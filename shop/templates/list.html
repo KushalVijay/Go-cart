@@ -1,0 +1,186 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+
+<b>Products</b>
+{% endblock %}
+{% block content %}
+<style>
+
+img {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  width: 150px;
+}
+
+img:hover {
+  box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+}
+</style>
+<div class='container' id="mydiv" align="center">
+    <div class="row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-3">
+            {% if messages %}
+            <div class="alert alert-success messages">
+            {% for message in messages %}
+            <span>
+              {{ message }}
+            </span>
+            {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<div class="row">
+<br>
+<br>
+<div class="col-sm-2">
+<div style=" padding:1px;
+    border-radius: 8px;
+   border:1px solid black;" id="sidebar">
+    <h3 style="text-align: center;color: black ">Categories</h3><br>
+
+    <ul>
+        <li {% if not category %} class="selected"{% endif %}>
+        <a style="color: #000;" href="{% url "shop:product_list" %}">All</a>
+        </li>
+    {% for c in categories %}
+    <li {% if category.slug == c.slug %} class="selected"{% endif %}>
+        <a style="color: black" href={{ c.get_absolute_url }}>{{ c.name }}</a>
+        </li>
+    {% endfor %}
+    </ul>
+<br>
+<br>
+
+</div>
+
+<br>
+
+<div style=" padding:1px;
+    border-radius: 8px;
+   border:1px solid black;" id="sidebar">
+    <h3 style="text-align: center;color: black ">Delivery Time</h3><br>
+       <div class="text-center">{% include 'timeslot/time.html' %}
+       </div>
+    <br>
+    <br>
+</div>
+
+    <br>
+    <br>
+
+
+
+
+
+
+
+
+    </div>
+<br>
+<br>
+
+
+<div class="col-sm-1"></div>
+    <div class="col-sm-9">
+<div class="row row-flex" >
+        {% for product in products  %}
+
+            <div    style="
+   border:1px solid black;"   class="col-xs-10 col-xs-offset-1 col-sm-offset-0 col-sm-3 col-md-3 display panel panel-defualt ">
+
+                <div class="panel-body">
+
+<!--                    <div class="product" style="background-image: url('{{ product.image1 }}');width:230px;height:200px;"></div>-->
+                        <div class="product" align="center"><a href="{{ product.get_absolute_url}}"><img width="200" height="150"; src="{{ product.image1 }}"></a></div>
+
+                    <p class="text-center"><b>{{ product.name }}</b></p>
+                    <strike><p class="text-center">₹ {{ product.mrp }}</p></strike>
+                    <p class="text-center">Price:₹ {{ product.price }}/-</p>
+                    {% if product.stock > 0 %}
+                    <p class="text-center">In Stock: {{ product.stock }}</p>
+                    {% else %}
+                    <p class="text-center"><font color="red">Out of Stock</font> </p>
+                    {% endif %}
+
+                    <form method="post" action="{% url 'cart:update' %}">
+                        <input type="hidden" name="product_id" value ={{ product.id }}>
+                        {% csrf_token %}
+                        <div class="input-group">
+                            <input name="quantity" type="number" min="1" max="{{ product.stock }}" class="form-control form-size" placeholder="Qty" required>
+                            <span class="input-group-btn">
+                                <button class="btn btn-success" type="submit">Add</button>
+                            </span>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    </div>
+    </div>
+
+     <section class="ftco-section">
+			<div class="container">
+				<div class="row no-gutters ftco-services">
+          <div class="col-md-3 text-center d-flex align-self-stretch ftco-animate fadeInUp ftco-animated">
+            <div class="media block-6 services mb-md-0 mb-4">
+              <div class="icon bg-color-1 active d-flex justify-content-center align-items-center mb-2">
+
+                  <img style="height: 150px;width: 150px" src={% static 'images/Capture1.PNG' %}>
+              </div>
+              <div class="media-body">
+                <h3 class="heading">Free Shipping</h3>
+                <span>On order over ₹ 100</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 text-center d-flex align-self-stretch ftco-animate fadeInUp ftco-animated">
+            <div class="media block-6 services mb-md-0 mb-4">
+              <div class="icon bg-color-2 d-flex justify-content-center align-items-center mb-2">
+            		<img style="height: 150px;width: 150px" src={% static 'images/Capture2.PNG' %}>
+              </div>
+              <div class="media-body">
+                <h3 class="heading">Always Fresh</h3>
+                <span>Product well package</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 text-center d-flex align-self-stretch ftco-animate fadeInUp ftco-animated">
+            <div class="media block-6 services mb-md-0 mb-4">
+              <div class="icon bg-color-3 d-flex justify-content-center align-items-center mb-2">
+            		<img style="height: 150px;width: 150px" src={% static 'images/Capture3.PNG' %}>
+              </div>
+              <div class="media-body">
+                <h3 class="heading">Superior Quality</h3>
+                <span>Quality Products</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 text-center d-flex align-self-stretch ftco-animate fadeInUp ftco-animated">
+            <div class="media block-6 services mb-md-0 mb-4">
+              <div class="icon bg-color-4 d-flex justify-content-center align-items-center mb-2">
+            		<img style="height: 150px;width: 150px" src={% static 'images/Capture4.PNG' %}>
+              </div>
+              <div class="media-body">
+                <h3 class="heading">Support</h3>
+                <span>24/7 Support</span>
+              </div>
+            </div>
+          </div>
+        </div>
+			</div>
+		</section>
+    <br>
+    <br>
+<script>
+    setTimeout(function() {
+    $('#mydiv').fadeOut('fast');
+    }, 800);
+</script>
+{% endblock %}

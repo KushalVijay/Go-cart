@@ -1,0 +1,189 @@
+{% extends "base.html" %}
+{% load static from staticfiles %}
+
+{% block content %}
+
+<head>
+<meta charset="utf-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>jQuery exzoom: Product Carousel Example</title>
+    <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+    <script src="https://www.jqueryscript.net/demo/Product-Carousel-Magnifying-Effect-exzoom/jquery.exzoom.js"></script>
+    <link href="https://www.jqueryscript.net/demo/Product-Carousel-Magnifying-Effect-exzoom/jquery.exzoom.css" rel="stylesheet" type="text/css"/>
+    <style>
+    /* Popup container - can be anything you want */
+.popup {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* The actual popup */
+.popup .popuptext {
+  visibility: hidden;
+  width: 160px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -80px;
+}
+
+/* Popup arrow */
+.popup .popuptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+/* Toggle this class - hide and show the popup */
+.popup .show {
+  visibility: visible;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s;
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity:1 ;}
+}
+
+
+
+#element1 {display:inline-block;margin-right:10px;}
+#element2 {display:inline-block;}
+    #exzoom {
+        width: 400px;
+        /*height: 400px;*/
+    }
+
+    .hidden { display: none; }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<div class="row">
+
+<div class="col-sm-6 " >
+<div class="exzoom hidden" id="exzoom">
+    <div class="exzoom_img_box">
+        <ul class='exzoom_img_ul'>
+            <li><img src="{{ product.image1 }}"/></li>
+            <li><img src="{{ product.image1 }}"/></li>
+            <li><img src="{{ product.image1 }}"/></li>
+            <li><img src="{{ product.image1 }}"/></li>
+            <li><img src="{{ product.image1 }}"/></li>
+            <li><img src="{{ product.image1 }}"/></li>
+            <li><img src="{{ product.image1 }}"/></li>
+            <li><img src="{{ product.image1 }}"/></li>
+        </ul>
+    </div>
+    <div class="exzoom_nav"></div>
+    <p class="exzoom_btn">
+        <a href="javascript:void(0);" class="exzoom_prev_btn"> < </a>
+        <a href="javascript:void(0);" class="exzoom_next_btn"> > </a>
+    </p>
+</div>
+</div>
+    <div class="col-sm-2"></div>
+<div class="col-sm-3">
+
+
+
+
+       <img height="130" width="130" src="{% if product.image1 %}{{ product.image1 }}{% else %}{% static "img/no_image.png "%}{%endif  %}">
+        <div class="caption">
+            <h2>{{ product.name }}</h2>
+
+            <h4><p class="product-description">{{ product.description }}</p></h4>
+            <p>In Stock = {{ product.stock }}</p>
+            MRP: <strike style="color: #1d2124;">₹{{ product.mrp }}</strike>
+            <p>
+            {% if product.LBH %}
+            <p class="text-center"> Dimensions : {{ product.LBH }}</p>
+            {% endif %}
+            <h4 style="color: rgba(156,10,10,0.89)">Price:<b> ₹ {{ product.price }}</b></h4>
+            <h4 id="element1">You Save:
+                <h4 id="element2" style="color: rgba(156,10,10,0.89)"><b>₹</b></h4>
+                <h4 id="element2" style="color: rgba(156,10,10,0.89)"><b><p id="demo"></p></b></h4>
+                <h4 id="element2" style="color: rgba(156,10,10,0.89)"><b>(</b></h4>
+                <h4 id="element2" style="color: rgba(156,10,10,0.89)"><b><p id="demo1"></p></b></h4>
+                <h4 id="element2" style="color: rgba(156,10,10,0.89)"><b>%)</b></h4>
+            </h4>
+            <form method="post" action="{% url 'cart:fav_update' %}">
+                        <input type="hidden" name="product_id" value ={{ product.id }}>
+                        {% csrf_token %}
+                <div class="popup" onclick="myFunction()">
+                    <button type="submit" class="btn btn-link btn-sm" style="padding: 0px;cursor: pointer;"><h4>Add to Favourites</h4></button>
+                    <span class="popuptext" id="myPopup">Product added to Favourites</span>
+                </div>
+
+            </form>
+            <form method="post" action="{% url 'cart:update' %}">
+                    <input type="hidden" name="product_id" value ={{ product.id }}>
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <input name="quantity" type="number"  min="1" max="{{ product.stock }}"  class="form-control" placeholder="Qty" required>
+                        <span class="input-group-btn">
+                            <button class="btn btn-success" type="submit">Add</button>
+                        </span>
+                    </div>
+                </form>
+
+
+        </div>
+    </div>
+</div>
+</div>
+<script type="text/javascript">
+
+    $('.container').imagesLoaded( function() {
+  $("#exzoom").exzoom({
+        autoPlay: false,
+    });
+  $("#exzoom").removeClass('hidden')
+});
+
+</script>
+<script>
+
+
+
+var x = {{ product.mrp }}-{{ product.price }} ;
+document.getElementById("demo").innerHTML = x;
+var y = Number(x *100 /{{ product.mrp }});
+var z = y.toFixed(0);
+document.getElementById("demo1").innerHTML = z;
+
+function myFunction() {
+  var popup = document.getElementById("myPopup");
+  popup.classList.toggle("show");
+}
+</script>
+</body>
+
+
+{% endblock %}
