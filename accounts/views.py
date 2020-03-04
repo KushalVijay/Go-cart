@@ -15,8 +15,8 @@ from .mixins import NextUrlMixin, RequestFormAttachMixin
 from .forms import LoginForm, RegisterForm, ReactivateEmailForm
 from .models import EmailActivation
 from .signals import user_logged_in
-
-
+from .models import User
+from order.models import Order
 
 
 
@@ -118,7 +118,17 @@ class Register_View(CreateView):
     template_name = 'accounts/register.html'
     success_url = 'login'
 
+def profile(request):
+    email = request.user.get_short_name()
+    username = request.user.get_full_name()
 
+    history = Order.objects.filter(email=email)
+    context = {
+        'history':history,
+        'name':username,
+        'email':email,
+    }
+    return render(request,'accounts/home.html',context=context)
 
 def Logout_view(request):
 

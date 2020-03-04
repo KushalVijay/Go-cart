@@ -22,7 +22,7 @@ def cart_contents(request):
         total += quantity * product.price
         product_count += quantity
         cart_items.append({'id': id, 'quantity': quantity, 'product': product})
-        items += str(product.name) + " X " + str(quantity) + "\n"
+        items += str(product.name) + " (Qty: " + str(quantity) + ") , "
 
 
     request.session['items'] = items

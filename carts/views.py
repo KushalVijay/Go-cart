@@ -118,7 +118,8 @@ def SendtoPaytm(request):
     if request.POST.get('submit')=='button1':
         paid = True
         newtotal = request.POST.get('newtotal')
-        if newtotal:
+        if newtotal != 'None':
+            print("yes")
             total = newtotal
         param_dict = {
             'MID': 'WorldP64425807474247',
@@ -128,11 +129,11 @@ def SendtoPaytm(request):
             'INDUSTRY_TYPE_ID': 'Retail',
             'WEBSITE': 'WEBSTAGING',
             'CHANNEL_ID': 'WEB',
-            'CALLBACK_URL': 'http://127.0.0.1:8000/carts/handlerequest/', #'https://rainbowcart.herokuapp.com/carts/handlerequest/',
+            'CALLBACK_URL': 'https://rainbowcart.herokuapp.com/carts/handlerequest/', #'http://127.0.0.1:8000/carts/handlerequest/', #
         }
 
         details = request.session['items']
-        obj = Order.objects.create(username=request.user, order_id=str(data['order_id']), address=data['address'],total=str(total),
+        obj = Order.objects.create(username=request.user, order_id=str(data['order_id']), address=data['address'],total=str(float(total)),
                                    contact=data['contact'],email=data['email'],paid=True,details= details)
         param_dict['CHECKSUMHASH'] = generate_checksum(param_dict, MERCHANT_KEY)
         cart = {}
@@ -147,11 +148,14 @@ def SendtoPaytm(request):
         email = request.POST.get('email')
         total = request.POST.get('total')
         newtotal = request.POST.get('newtotal')
-        if newtotal:
+        print(newtotal,type(newtotal))
+        if newtotal !='None':
+            print("yes")
             total = newtotal
+
         details = request.session['items']
         obj = Order.objects.create(username=request.user, order_id=str(data['order_id']), address=data['address'],
-                                   total=str(total), contact=data['contact'],email=email,paid=False,details= details)
+                                   total=str(float(total)), contact=data['contact'],email=email,paid=False,details= details)
         cart = {}
         request.session['cart'] = cart
         return render(request, "carts/cashondel.html",{'total':total,'address':address,'contact':contact,'order_id':order_id})

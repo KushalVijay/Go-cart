@@ -8,7 +8,7 @@ from .views import (
         Register_View,
         Logout_view,
         Home,
-
+        profile
         )
 
 
@@ -23,6 +23,7 @@ urlpatterns = [
     path('logout',Logout_view,name='logout'),
     path('login',Login_View.as_view(),name='login'),
     path('home', Home.as_view(), name='home'),
+    path('profile', profile, name='profile'),
     path('register',Register_View.as_view(),name='register'),
     
 ]
