@@ -149,9 +149,23 @@ STATICFILES_DIRS=(
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT=os.path.join(os.path.dirname(BASE_DIR),'staticfiles',"static_root")
 
 MEDIA_URL='/media/'
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'staticfiles',"media_root")
+
+AWS_ACCESS_KEY_ID = '24YPCRCAP2EBKVYQY7WD'
+AWS_SECRET_ACCESS_KEY = 'lcIO4stynJWqvm9jkE+cmF34L3G10LRO9Dw3Ik6FHdI'
+AWS_STORAGE_BUCKET_NAME = 'therainbows'
+AWS_S3_ENDPOINT_URL = 'https://nyc3.digitaloceanspaces.com'
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+AWS_LOCATION = 'static'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+STATIC_URL = 'https://%s/%s/' % (AWS_S3_ENDPOINT_URL, AWS_LOCATION)
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 django_heroku.settings(locals())
