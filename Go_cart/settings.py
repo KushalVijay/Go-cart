@@ -12,17 +12,17 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER =  'kushvijay38@gmail.com'
-EMAIL_HOST_PASSWORD  = 'npbadzbszadholye'
-DEFAULT_FROM_EMAIL = 'Email Activation <kushvijay38@gmail.com>'
+EMAIL_HOST_USER =  'example@gmail.com'
+EMAIL_HOST_PASSWORD  = ''
+DEFAULT_FROM_EMAIL = 'Email Activation <example@gmail.com>'
 EMAIL_PORT = 587
 #EMAIL_USE_SSL = False
 import os
 import django_heroku
-BASE_URL = 'https://rainbowcart.herokuapp.com' # '127.0.0.1:8000'  #
+BASE_URL =  '127.0.0.1:8000'  #
 
 MANAGERS = (
-    ('Kushal', "kushvijay38@gmail.com"),
+    (),
 )
 
 ADMINS = MANAGERS
@@ -153,10 +153,10 @@ STATICFILES_DIRS=(
 MEDIA_URL='/media/'
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'staticfiles',"media_root")
 
-AWS_ACCESS_KEY_ID = '24YPCRCAP2EBKVYQY7WD'
-AWS_SECRET_ACCESS_KEY = 'lcIO4stynJWqvm9jkE+cmF34L3G10LRO9Dw3Ik6FHdI'
-AWS_STORAGE_BUCKET_NAME = 'therainbows'
-AWS_S3_ENDPOINT_URL = 'https://nyc3.digitaloceanspaces.com'
+AWS_ACCESS_KEY_ID = ''
+AWS_SECRET_ACCESS_KEY = ''
+AWS_STORAGE_BUCKET_NAME = ''
+AWS_S3_ENDPOINT_URL = ''
 AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=86400',
 }
